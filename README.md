@@ -1,5 +1,15 @@
 # AIDP Lakehouse: desenvolvimento local e teste remoto
 
+## Teste de Iceberg nativo
+
+`notebooks/Native_Iceberg_Table_dev.ipynb` adapta o exemplo Oracle `getting-started/Native_Iceberg_Table.ipynb` para o compute `Medallion_Compute`.
+
+- Parâmetro `CATALOG_NAME=default`: deve apontar para um catálogo interno/Standard com suporte Iceberg nativo.
+- Cria um schema `iceberg_demo_<run_id>` exclusivo e a tabela gerenciada `orders`; preserva os recursos após o teste.
+- Valida INSERT, evolução de schema e particionamento, MERGE, snapshots e time travel com comparação dos valores esperados.
+- O resultado é emitido em `AIDP_ICEBERG_TEST_RESULT=`. Não usa o banco Autonomous Lakehouse nem os diretórios do teste CSV.
+- Validação local: `python3 scripts/validate_notebook.py notebooks/Native_Iceberg_Table_dev.ipynb`. O teste funcional exige runtime e catálogo Iceberg no AIDP.
+
 ## Teste de Object Storage
 
 `notebooks/Access_Object_Storage_Data_dev.ipynb` adapta o exemplo Oracle `getting-started/Access_Object_Storage_Data.ipynb`.
