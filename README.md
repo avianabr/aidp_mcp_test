@@ -1,5 +1,9 @@
 # AIDP Lakehouse: desenvolvimento local e teste remoto
 
+## Iceberg em bucket escolhido
+
+`notebooks/External_Iceberg_Table_dev.ipynb` usa `CATALOG_NAME=default` e `BUCKET_URI=oci://aidp_test@idzvuvikb5ym`. Cria um schema exclusivo e especifica LOCATION em `aidp_codex_tests/iceberg_external/<run_id>/orders`, fora do prefixo do volume externo. O teste confere localização, MERGE, snapshots e time travel. O tipo EXTERNAL/MANAGED deve ser verificado no registro da API AIDP; não é inferido somente pelo caminho escolhido. Mantém todos os recursos para inspeção.
+
 ## Teste de Iceberg nativo
 
 `notebooks/Native_Iceberg_Table_dev.ipynb` adapta o exemplo Oracle `getting-started/Native_Iceberg_Table.ipynb` para o compute `Medallion_Compute`.
