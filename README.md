@@ -1,5 +1,9 @@
 # AIDP Lakehouse: desenvolvimento local e teste remoto
 
+## Persistência do modelo financeiro
+
+`notebooks/Finance_Model_Persistence_dev.ipynb` lê a tabela Gold do teste anterior (`SOURCE_TABLE`), treina novamente o pipeline Spark ML e salva em `oci://aidp_test@idzvuvikb5ym/aidp_codex_tests/models/finance_rf/<run_id>/spark_pipeline`. Verifica `PipelineModel.load` e igualdade de predições/probabilidades em 100 exemplos. O formato salvo é Spark ML PipelineModel, não um pacote MLflow pyfunc. O artefato e um manifesto de validação permanecem no bucket. A execução não publica um endpoint e não usa dados/labels reais de fraude.
+
 ## Serviços financeiros: Medallion e ML
 
 `notebooks/Financial_Services_Medallion_dev.ipynb` adapta o demo Oracle de serviços financeiros, com dados sintéticos, quatro tabelas Delta e três schemas exclusivos por execução no catálogo `default`.
