@@ -1,5 +1,17 @@
 # AIDP Lakehouse: desenvolvimento local e teste remoto
 
+## Teste de Object Storage
+
+`notebooks/Access_Object_Storage_Data_dev.ipynb` adapta o exemplo Oracle `getting-started/Access_Object_Storage_Data.ipynb`.
+
+- Informe `OCI_BUCKET=oci://bucket@namespace` como parâmetro da tarefa. O bucket deve ser destinado ao teste e acessível pela identidade usada no compute AIDP.
+- `CATALOG_NAME=default` e `SCHEMA_NAME=default` definem o destino dos metadados. Use um catálogo interno, não o catálogo externo do Autonomous Lakehouse.
+- `BASE_PREFIX=aidp_codex_tests/object_storage` é o prefixo base. Cada execução acrescenta um identificador aleatório.
+- O teste valida CSV por URI OCI, por volume externo e por tabela externa. Compara todos os valores, testa append nos arquivos da tabela externa e consulta novamente.
+- Permanecem três diretórios de dados sintéticos, um volume externo e uma tabela externa por execução. Nenhum recurso anterior é sobrescrito ou apagado.
+- O marcador de sucesso é `AIDP_OBJECT_STORAGE_TEST_RESULT=`. Validação local: `python3 scripts/validate_notebook.py notebooks/Access_Object_Storage_Data_dev.ipynb`.
+- Runtime recomendado neste projeto: workspace `Medallion_arch`, compute `Medallion_Compute`. A criação de um workflow e o teste remoto dependem da escolha do bucket.
+
 Notebook: `notebooks/Access_ALH_Data_dev.ipynb`, adaptado do exemplo Oracle:
 https://github.com/oracle-samples/oracle-aidp-samples/blob/main/getting-started/Access_ALH_Data.ipynb
 

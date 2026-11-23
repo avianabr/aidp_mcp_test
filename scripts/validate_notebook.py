@@ -1,9 +1,10 @@
 """Validação estática local; não substitui o teste de integração no AIDP."""
 import ast
 import json
+import sys
 from pathlib import Path
 
-path = Path(__file__).resolve().parents[1] / 'notebooks/Access_ALH_Data_dev.ipynb'
+path = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).resolve().parents[1] / 'notebooks/Access_ALH_Data_dev.ipynb'
 notebook = json.loads(path.read_text())
 assert notebook['nbformat'] == 4
 count = 0
