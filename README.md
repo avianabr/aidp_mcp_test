@@ -34,7 +34,7 @@ O notebook exige o runtime AIDP (`spark` e `oidlUtils`). A execução pelo kerne
 
 Com SCHEMA/TABLE vazios, apenas a descoberta de schemas é testada. Para validar leitura, informe ambos; o teste força a leitura de até cinco linhas sem imprimi-las.
 
-Para escrita, prepare uma tabela exclusiva de teste com as seis colunas descritas no notebook. Cada execução gera IDs únicos e insere três linhas (duas via DataFrame, uma via SQL). As linhas permanecem na origem; uma nova execução adiciona outro conjunto. O notebook não cria tabelas, não sobrescreve dados e não apaga os registros de teste.
+Para escrita, prepare uma tabela exclusiva de teste com as seis colunas descritas no notebook. Cada execução gera IDs únicos e insere três linhas (duas via DataFrame, uma via SQL). As linhas permanecem na origem; uma nova execução adiciona outro conjunto. O parâmetro opcional `CREATE_TEST_TABLE=true` prepara uma tabela `admin.aidp_notebook_write_test*` via conector `aidataplatform`, sem sobrescrever uma tabela existente. O notebook não apaga os registros de teste.
 
 Credenciais do banco são gerenciadas pelo catálogo AIDP. O notebook não precisa do wallet ou da senha ADMIN. Mantenha outputs de dados e credenciais fora dos commits.
 
@@ -49,3 +49,5 @@ Credenciais do banco são gerenciadas pelo catálogo AIDP. O notebook não preci
 As ferramentas Git nativas exigem `oci-common` e `aidp-typescript-client` disponíveis para o plugin. A disponibilidade dessas dependências e do recurso Git Preview deve ser validada antes da primeira criação.
 
 Ainda não foram criados repositório Git, Git folder ou workflow de teste por este projeto.
+
+Para o teste de escrita, configure SCHEMA=admin, TABLE=aidp_notebook_write_test e WRITE_ENABLED=true. Na primeira execução, use CREATE_TEST_TABLE=true para preparar a tabela. A validação confere três linhas e os valores de todas as colunas.
