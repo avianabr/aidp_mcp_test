@@ -65,3 +65,7 @@ Ainda não foram criados repositório Git, Git folder ou workflow de teste por e
 Para o teste de escrita, configure SCHEMA=admin, TABLE=aidp_notebook_write_test e WRITE_ENABLED=true. Na primeira execução, use CREATE_TEST_TABLE=true para preparar a tabela. A validação confere três linhas e os valores de todas as colunas.
 
 O runtime testado não aceita `CREATE EXTERNAL VOLUME` via Spark SQL. O volume `default.default.aidp_os_test_volume` é provisionado pela API AIDP em `oci://aidp_test@idzvuvikb5ym/aidp_codex_tests/object_storage/`. O notebook aceita EXTERNAL_VOLUME_NAME e EXTERNAL_VOLUME_LOCATION, e isola os arquivos por execução. A tabela externa continua sendo criada pelo notebook.
+
+A tabela CSV `default.default.aidp_os_test_table` também é provisionada pela API de catálogo. Seu diretório inicial é `oci://aidp_test@idzvuvikb5ym/aidp_codex_tests/object_storage_tables/csv_test`; configure EXTERNAL_TABLE_NAME e EXTERNAL_TABLE_LOCATION ao usar outra tabela. Os testes de tabela usam append e identificam as linhas pelo run_id; cada execução preserva os dados anteriores.
+
+Os locais do volume e da tabela externa devem ser separados: registrar a tabela dentro do prefixo já usado pelo volume foi rejeitado pelo AIDP como localização em uso.
