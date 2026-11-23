@@ -1,5 +1,13 @@
 # AIDP Lakehouse: desenvolvimento local e teste remoto
 
+## Serviços financeiros: Medallion e ML
+
+`notebooks/Financial_Services_Medallion_dev.ipynb` adapta o demo Oracle de serviços financeiros, com dados sintéticos, quatro tabelas Delta e três schemas exclusivos por execução no catálogo `default`.
+
+Parâmetros: CATALOG_NAME=default, ACCOUNT_COUNT=5000, SEED=42, RF_NUM_TREES=100, RF_MAX_DEPTH=10 e ENABLE_LIQUID_CLUSTERING=false. Liquid clustering exige suporte explícito do runtime e não é validado na execução padrão.
+
+Corrige tipos monetários e timestamps, confere contagens entre Bronze/Silver/Gold, reconcilia os totais financeiros e treina/avalia um Random Forest. O rótulo deriva de risco aleatório; a AUC é demonstrativa e não prova utilidade para fraude real. O modelo não é publicado. Marcador final: AIDP_FINANCE_MEDALLION_TEST_RESULT=. Recursos mantidos para inspeção, sem sobrescrever tabelas existentes.
+
 ## Iceberg em bucket escolhido
 
 `notebooks/External_Iceberg_Table_dev.ipynb` usa `CATALOG_NAME=default` e `BUCKET_URI=oci://aidp_test@idzvuvikb5ym`. Cria um schema exclusivo e especifica LOCATION em `aidp_codex_tests/iceberg_external/<run_id>/orders`, fora do prefixo do volume externo. O teste confere localização, MERGE, snapshots e time travel. O tipo EXTERNAL/MANAGED deve ser verificado no registro da API AIDP; não é inferido somente pelo caminho escolhido. Mantém todos os recursos para inspeção.
