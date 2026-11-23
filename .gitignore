@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+Wallet*.zip
+*.pem
+*.p12
+*.sso
+*.jks
+.oci/
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+qa-runs/
