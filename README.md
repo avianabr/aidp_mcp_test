@@ -1,5 +1,9 @@
 # AIDP Lakehouse: desenvolvimento local e teste remoto
 
+## Teste finito de Structured Streaming
+
+`notebooks/Streaming_Volume_To_Delta_dev.ipynb` gera dois arquivos CSV sintéticos no volume `default.default.aidp_os_test_volume` e usa `readStream`/`writeStream` com trigger `availableNow` para gravar uma tabela Delta gerenciada. A primeira passagem consome dois eventos, a segunda retoma o checkpoint e consome dois novos, e a terceira confirma ausência de reprocessamento sem novos arquivos. Valida os valores, a identidade persistida da consulta e quatro IDs únicos no destino. Não deduplica eventos de negócio novos nem testa queda abrupta. Entrada e checkpoint ficam em um diretório exclusivo do volume; schema e tabela novos por execução. Todas as consultas encerram antes de concluir o workflow. Marcador: AIDP_STREAMING_TEST_RESULT=.
+
 ## Persistência do modelo financeiro
 
 `notebooks/Finance_Model_Persistence_dev.ipynb` lê a tabela Gold do teste anterior (`SOURCE_TABLE`), treina novamente o pipeline Spark ML e salva em `oci://aidp_test@idzvuvikb5ym/aidp_codex_tests/models/finance_rf/<run_id>/spark_pipeline`. Verifica `PipelineModel.load` e igualdade de predições/probabilidades em 100 exemplos. O formato salvo é Spark ML PipelineModel, não um pacote MLflow pyfunc. O artefato e um manifesto de validação permanecem no bucket. A execução não publica um endpoint e não usa dados/labels reais de fraude.
