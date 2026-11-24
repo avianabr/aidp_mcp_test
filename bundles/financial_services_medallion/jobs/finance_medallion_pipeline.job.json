@@ -1,0 +1,220 @@
+{
+  "runAs": null,
+  "name": "${publish.resource_name_prefix}finance_medallion_pipeline${publish.resource_name_suffix}",
+  "description": "Pipeline financeiro modular: Bronze → Silver → Gold → treinamento; dados sintéticos.",
+  "schedule": null,
+  "continuous": null,
+  "maxConcurrentRuns": 1,
+  "gitConfig": null,
+  "queue": null,
+  "path": null,
+  "jobClusters": null,
+  "tasks": [
+    {
+      "type": "NOTEBOOK_TASK",
+      "taskKey": "bronze",
+      "dependsOn": [],
+      "runIf": "ALL_SUCCESS",
+      "maxRetries": 0,
+      "minRetryIntervalMillis": null,
+      "isRetryOnTimeout": null,
+      "notebookPath": "${publish.path}/artifacts/notebooks/bronze.ipynb",
+      "source": "WORKSPACE",
+      "gitConfig": null,
+      "cluster": {
+        "clusterKey": "${var.compute_key}"
+      },
+      "parameters": [
+        {
+          "name": "DATASET_ID",
+          "value": "${var.dataset_id}"
+        },
+        {
+          "name": "CATALOG_NAME",
+          "value": "${var.catalog_name}"
+        },
+        {
+          "name": "ACCOUNT_COUNT",
+          "value": "${var.account_count}"
+        },
+        {
+          "name": "SEED",
+          "value": "${var.seed}"
+        },
+        {
+          "name": "RF_NUM_TREES",
+          "value": "${var.rf_num_trees}"
+        },
+        {
+          "name": "RF_MAX_DEPTH",
+          "value": "${var.rf_max_depth}"
+        },
+        {
+          "name": "ENABLE_LIQUID_CLUSTERING",
+          "value": "${var.enable_liquid_clustering}"
+        }
+      ],
+      "timeoutSeconds": 900,
+      "isStreaming": null
+    },
+    {
+      "type": "NOTEBOOK_TASK",
+      "taskKey": "silver",
+      "dependsOn": [
+        {
+          "taskKey": "bronze",
+          "outcome": null
+        }
+      ],
+      "runIf": "ALL_SUCCESS",
+      "maxRetries": 0,
+      "minRetryIntervalMillis": null,
+      "isRetryOnTimeout": null,
+      "notebookPath": "${publish.path}/artifacts/notebooks/silver.ipynb",
+      "source": "WORKSPACE",
+      "gitConfig": null,
+      "cluster": {
+        "clusterKey": "${var.compute_key}"
+      },
+      "parameters": [
+        {
+          "name": "DATASET_ID",
+          "value": "${var.dataset_id}"
+        },
+        {
+          "name": "CATALOG_NAME",
+          "value": "${var.catalog_name}"
+        },
+        {
+          "name": "ACCOUNT_COUNT",
+          "value": "${var.account_count}"
+        },
+        {
+          "name": "SEED",
+          "value": "${var.seed}"
+        },
+        {
+          "name": "RF_NUM_TREES",
+          "value": "${var.rf_num_trees}"
+        },
+        {
+          "name": "RF_MAX_DEPTH",
+          "value": "${var.rf_max_depth}"
+        },
+        {
+          "name": "ENABLE_LIQUID_CLUSTERING",
+          "value": "${var.enable_liquid_clustering}"
+        }
+      ],
+      "timeoutSeconds": 900,
+      "isStreaming": null
+    },
+    {
+      "type": "NOTEBOOK_TASK",
+      "taskKey": "gold",
+      "dependsOn": [
+        {
+          "taskKey": "silver",
+          "outcome": null
+        }
+      ],
+      "runIf": "ALL_SUCCESS",
+      "maxRetries": 0,
+      "minRetryIntervalMillis": null,
+      "isRetryOnTimeout": null,
+      "notebookPath": "${publish.path}/artifacts/notebooks/gold.ipynb",
+      "source": "WORKSPACE",
+      "gitConfig": null,
+      "cluster": {
+        "clusterKey": "${var.compute_key}"
+      },
+      "parameters": [
+        {
+          "name": "DATASET_ID",
+          "value": "${var.dataset_id}"
+        },
+        {
+          "name": "CATALOG_NAME",
+          "value": "${var.catalog_name}"
+        },
+        {
+          "name": "ACCOUNT_COUNT",
+          "value": "${var.account_count}"
+        },
+        {
+          "name": "SEED",
+          "value": "${var.seed}"
+        },
+        {
+          "name": "RF_NUM_TREES",
+          "value": "${var.rf_num_trees}"
+        },
+        {
+          "name": "RF_MAX_DEPTH",
+          "value": "${var.rf_max_depth}"
+        },
+        {
+          "name": "ENABLE_LIQUID_CLUSTERING",
+          "value": "${var.enable_liquid_clustering}"
+        }
+      ],
+      "timeoutSeconds": 900,
+      "isStreaming": null
+    },
+    {
+      "type": "NOTEBOOK_TASK",
+      "taskKey": "train",
+      "dependsOn": [
+        {
+          "taskKey": "gold",
+          "outcome": null
+        }
+      ],
+      "runIf": "ALL_SUCCESS",
+      "maxRetries": 0,
+      "minRetryIntervalMillis": null,
+      "isRetryOnTimeout": null,
+      "notebookPath": "${publish.path}/artifacts/notebooks/train.ipynb",
+      "source": "WORKSPACE",
+      "gitConfig": null,
+      "cluster": {
+        "clusterKey": "${var.compute_key}"
+      },
+      "parameters": [
+        {
+          "name": "DATASET_ID",
+          "value": "${var.dataset_id}"
+        },
+        {
+          "name": "CATALOG_NAME",
+          "value": "${var.catalog_name}"
+        },
+        {
+          "name": "ACCOUNT_COUNT",
+          "value": "${var.account_count}"
+        },
+        {
+          "name": "SEED",
+          "value": "${var.seed}"
+        },
+        {
+          "name": "RF_NUM_TREES",
+          "value": "${var.rf_num_trees}"
+        },
+        {
+          "name": "RF_MAX_DEPTH",
+          "value": "${var.rf_max_depth}"
+        },
+        {
+          "name": "ENABLE_LIQUID_CLUSTERING",
+          "value": "${var.enable_liquid_clustering}"
+        }
+      ],
+      "timeoutSeconds": 900,
+      "isStreaming": null
+    }
+  ],
+  "parameters": null,
+  "timeoutSeconds": 1800,
+  "jobTag": null
+}

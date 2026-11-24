@@ -1,0 +1,5 @@
+# Copie para .aidp/overrides.yaml e preencha para o ambiente de destino.
+variables:
+  compute_key: "7196b48e-0f40-43d7-bd30-4fcce9f85d8e"
+  dataset_id: "teste_20261124_01"
+  catalog_name: "default"

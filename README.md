@@ -1,5 +1,9 @@
 # AIDP Lakehouse: desenvolvimento local e teste remoto
 
+## Bundle financeiro modular
+
+O exemplo Financial Services Medallion agora possui uma [versão em bundle](bundles/financial_services_medallion/README.md), com notebooks separados para Bronze, Silver, Gold e treinamento. O workflow encadeia as quatro tarefas e troca dados por tabelas Delta persistidas. Manifesto, descritor do job e notebooks ficam juntos em `bundles/financial_services_medallion/`; variáveis definem catálogo, dataset e compute de destino. Essa é a versão recomendada para manutenção e deployment pelo Git. O notebook monolítico permanece como referência do teste original.
+
 ## Teste finito de Structured Streaming
 
 `notebooks/Streaming_Volume_To_Delta_dev.ipynb` gera dois arquivos CSV sintéticos no volume `default.default.aidp_os_test_volume` e usa `readStream`/`writeStream` com trigger `availableNow` para gravar uma tabela Delta gerenciada. A primeira passagem consome dois eventos, a segunda retoma o checkpoint e consome dois novos, e a terceira confirma ausência de reprocessamento sem novos arquivos. Valida os valores, a identidade persistida da consulta e quatro IDs únicos no destino. Não deduplica eventos de negócio novos nem testa queda abrupta. Entrada e checkpoint ficam em um diretório exclusivo do volume; schema e tabela novos por execução. Todas as consultas encerram antes de concluir o workflow. Marcador: AIDP_STREAMING_TEST_RESULT=.

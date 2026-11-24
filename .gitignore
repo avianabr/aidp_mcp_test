@@ -11,3 +11,6 @@ Wallet*.zip
 __pycache__/
 .ipynb_checkpoints/
 qa-runs/
+**/.aidp/overrides.yaml
+**/.aidp/aidp.state.json
+**/.aidp/deployment*.json
